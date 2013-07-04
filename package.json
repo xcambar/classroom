@@ -6,7 +6,7 @@
   "scripts": {
     "test": "`npm bin`/coffee spec/runner.coffee"
   },
-  "repository": "git@github.com:xcambar/classRoom.git",
+  "repository": "git@github.com:xcambar/classroom.git",
   "keywords": [
     "class",
     "classes",
