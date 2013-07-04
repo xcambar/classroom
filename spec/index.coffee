@@ -24,3 +24,9 @@ describe 'teaching a class with classRoom.teach', ->
     it 'should have a function property called "new"', ->
       expect(classRoom.teach({})).to.not.be.undefined
       classRoom.teach({}).new.should.be.a 'function'
+
+describe 'The class property', ->
+  it 'should be a function', ->
+    classRoom.teach.bind(undefined, constructor: ->).should.not.throw()
+    classRoom.teach.bind(undefined, constructor: {}).should.throw TypeError
+

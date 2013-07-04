@@ -18,15 +18,26 @@
 // }
 //
 
+
+function _generateNew (desc) {
+  // The REAL new function
+  return function () {
+
+  };
+}
+
 module.exports = {
   teach: function (desc) {
     if (!desc) {
       throw new Error('Get Out');
     }
-    return {
-      new: function () {
-
+    if (desc.constructor) {
+      if (!(desc.constructor instanceof Function)) {
+        throw new TypeError('The constructor MUST be a function');
       }
+    }
+    return {
+      new: _generateNew(desc)
     };
   }
 };
