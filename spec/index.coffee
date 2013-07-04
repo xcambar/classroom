@@ -46,3 +46,17 @@ describe 'The constructor property', ->
     args = [true, 1, ['a', 2], {bar: 'baz'}]
     ret = classRoom.teach(constructor: spy).new.apply undefined, args 
     spy.should.have.been.calledWithExactly args[0], args[1], args[2], args[3]
+
+describe 'The const object property', ->
+  it 'should have its values attached to the returned object', ->
+    _const = {a:1, b:2, c:3}
+    obj = classRoom.teach(const: _const).new()
+    obj.a.should.eql 1
+    obj.b.should.eql 2
+    obj.c.should.eql 3
+  it 'should have its values immutable on the returned object', ->
+    _const = {a:1, b:2, c:3}
+    obj = classRoom.teach(const: _const).new()
+    obj.a = 2
+    obj.a.should.be.eql 1
+

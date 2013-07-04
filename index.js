@@ -18,11 +18,19 @@
 // }
 //
 
+function _constConfig (v) {
+  return {
+    value: v
+  };
+}
 
 function _generateNew (desc) {
   // The REAL new function
   return function () {
     var ret = {};
+    Object.keys(desc.const || {}).forEach(function (k) {
+      Object.defineProperty(ret, k, _constConfig(desc.const[k]));
+    });
     desc.constructor.apply(ret, arguments);
     return ret;
   };
