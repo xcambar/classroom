@@ -18,6 +18,8 @@
 // }
 //
 
+var _reserved = ['const', 'initialize'];
+
 function _constConfig (v) {
   return {
     value: v
@@ -29,9 +31,14 @@ function _generateNew (desc) {
   return function () {
     var ret = {};
     Object.keys(desc.const || {}).forEach(function (k) {
+      if (_reserved.indexOf(k) > -1) { return; }
       Object.defineProperty(ret, k, _constConfig(desc.const[k]));
     });
-    desc.constructor.apply(ret, arguments);
+    Object.keys(desc).forEach(function (k) {
+      if (_reserved.indexOf(k) > -1) { return; }
+      ret[k] = desc[k];
+    });
+    desc.initialize.apply(ret, arguments);
     return ret;
   };
 }
@@ -41,12 +48,12 @@ module.exports = {
     if (!desc) {
       throw new Error('Get Out');
     }
-    if (desc.constructor) {
-      if (!(desc.constructor instanceof Function)) {
-        throw new TypeError('The constructor MUST be a function');
+    if (desc.initialize) {
+      if (!(desc.initialize instanceof Function)) {
+        throw new TypeError('The initialize MUST be a function');
       }
     } else {
-      desc.constructor = function () {};
+      desc.initialize = function () {};
     }
     return {
       new: _generateNew(desc)
