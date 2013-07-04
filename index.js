@@ -22,7 +22,9 @@
 function _generateNew (desc) {
   // The REAL new function
   return function () {
-
+    var ret = {};
+    desc.constructor.apply(ret, arguments);
+    return ret;
   };
 }
 
@@ -35,6 +37,8 @@ module.exports = {
       if (!(desc.constructor instanceof Function)) {
         throw new TypeError('The constructor MUST be a function');
       }
+    } else {
+      desc.constructor = function () {};
     }
     return {
       new: _generateNew(desc)
