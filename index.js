@@ -20,10 +20,11 @@
 
 var _reserved = ['const', 'initialize'];
 
-function _constConfig (v) {
-  return {
-    value: v
-  };
+function _defProp(obj, key, value, isConst) {
+  Object.defineProperty(obj, key, {
+    value: value,
+    writable: !isConst
+  });
 }
 
 function _generateNew (desc) {
@@ -32,11 +33,11 @@ function _generateNew (desc) {
     var ret = {};
     Object.keys(desc.const || {}).forEach(function (k) {
       if (_reserved.indexOf(k) > -1) { return; }
-      Object.defineProperty(ret, k, _constConfig(desc.const[k]));
+      _defProp(ret, k, desc.const[k], true);
     });
     Object.keys(desc).forEach(function (k) {
       if (_reserved.indexOf(k) > -1) { return; }
-      ret[k] = desc[k];
+      _defProp(ret, k, desc[k], desc[k] instanceof Function);
     });
     desc.initialize.apply(ret, arguments);
     return ret;

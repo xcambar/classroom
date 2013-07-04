@@ -66,3 +66,11 @@ describe 'any non-reserved property', ->
     obj.yay.should.eql 'cool'
     expect(obj.const).to.be.undefined
     expect(obj.initialize).to.be.undefined
+  it 'should be mutable if it is not a function', ->
+    obj = classRoom.teach(yay: 'woooh').new()
+    obj.yay = 'cool'
+    obj.yay.should.eql 'cool'
+  it 'should be immutable if it is a function', ->
+    obj = classRoom.teach(yay: -> 'woooh').new()
+    obj.yay = -> 'cool'
+    obj.yay().should.eql 'woooh'
