@@ -10,6 +10,10 @@ A implementation of classes in Javascript for ES5 engines.
 * Private members
 * Constant members
 
+## Installation
+
+    npm install classroom
+
 ## Examples
 
     var classRoom = require('classroom');
@@ -21,7 +25,7 @@ A implementation of classes in Javascript for ES5 engines.
         this.privateArg = arg1;
       },
       const: { //Describes the constant members of your instances
-        const1: "Awesome, I'm immutable!";
+        const1: "Awesome, I'm immutable!"
       },
       private: { // Describes the properties that are only visible inside the instance
         pv1: "only the instance methods can see me, sweet!",
@@ -32,10 +36,13 @@ A implementation of classes in Javascript for ES5 engines.
       // All the other properties are public instance members
       gimmeSecret: function () {
         return "I'm a getter for a private member: " + this.secretFn();
+      },
+      getConstructorFirstArg: function () {
+        return this.privateArg;
       }
     });
 
-    var instance = testClass.new();
+    var instance = testClass.new("First arg");
 
     instance.const1; // => "Awesome, I'm immutable!"
     instance.const1 = 'new value'; // throws TypeError
@@ -46,6 +53,7 @@ A implementation of classes in Javascript for ES5 engines.
     instance.secretFn; // => undefined
 
     instance.gimmeSecret(); // => "I'm a getter for a private member: I'm invisible to the outside world."
+    instance.getConstructorFirstArg(); // => "First Arg"
 
 
 ## TODO
