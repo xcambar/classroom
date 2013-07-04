@@ -1,5 +1,5 @@
 {
-  "name": "classRoom",
+  "name": "classroom",
   "version": "0.2.0",
   "description": "A Ruby-like implementation for ES5",
   "main": "index.js",
