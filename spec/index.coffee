@@ -86,3 +86,6 @@ describe 'private properties', ->
   it 'should not be available in the returned object', ->
     obj = classRoom.teach(private: {a: 1}).new()
     expect(obj.a).to.be.undefined
+  it 'should be available to instance members', ->
+    obj = classRoom.teach(private: {a: "I'm private"}, getA: -> @a).new()
+    obj.getA().should.be.eql "I'm private"
