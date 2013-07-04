@@ -37,7 +37,7 @@ describe 'The initialize property', ->
     spy = sinon.spy()
     classRoom.teach(initialize: spy).new()
     spy.should.have.been.called
-  it 'should be called with the context of the returned object', ->
+  xit 'should be called with the context of the returned object', ->
     spy = sinon.spy()
     ret = classRoom.teach(initialize: spy).new()
     spy.should.have.been.calledOn ret
@@ -57,7 +57,9 @@ describe 'The const object property', ->
   it 'should have its values immutable on the returned object', ->
     _const = {a:1, b:2, c:3}
     obj = classRoom.teach(const: _const).new()
-    obj.a = 2
+    fail = ->
+      obj.a = 2
+    fail.bind(undefined).should.throw Error
     obj.a.should.be.eql 1
 
 describe 'any non-reserved property', ->
@@ -72,5 +74,7 @@ describe 'any non-reserved property', ->
     obj.yay.should.eql 'cool'
   it 'should be immutable if it is a function', ->
     obj = classRoom.teach(yay: -> 'woooh').new()
-    obj.yay = -> 'cool'
+    fail = -> 
+      obj.yay = -> 'cool'
+    fail.bind(undefined).should.throw TypeError
     obj.yay().should.eql 'woooh'
