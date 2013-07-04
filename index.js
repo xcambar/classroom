@@ -18,7 +18,7 @@
 // }
 //
 
-var _reserved = ['const', 'initialize'];
+var _reserved = ['const', 'initialize', 'private'];
 
 function _defProp(obj, key, value, isConst) {
   Object.defineProperty(obj, key, {

@@ -64,7 +64,7 @@ describe 'The const object property', ->
 
 describe 'any non-reserved property', ->
   it 'should be available in the returned object', ->
-    obj = classRoom.teach(const: {a: 1}, initialize: ->, yay: 'cool').new()
+    obj = classRoom.teach(yay: 'cool').new()
     obj.yay.should.eql 'cool'
     expect(obj.const).to.be.undefined
     expect(obj.initialize).to.be.undefined
@@ -78,3 +78,11 @@ describe 'any non-reserved property', ->
       obj.yay = -> 'cool'
     fail.bind(undefined).should.throw TypeError
     obj.yay().should.eql 'woooh'
+
+describe 'private properties', ->
+  it 'should not return the "private" property', ->
+    obj = classRoom.teach(private: {a: 1}).new()
+    expect(obj.private).to.be.undefined
+  it 'should not be available in the returned object', ->
+    obj = classRoom.teach(private: {a: 1}).new()
+    expect(obj.a).to.be.undefined
