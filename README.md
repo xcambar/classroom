@@ -7,6 +7,7 @@ A implementation of classes in Javascript for ES5 engines.
 ## Features
 
 * Constructor
+* Protected embers
 * Private members
 * Constant members
 
@@ -18,7 +19,7 @@ A implementation of classes in Javascript for ES5 engines.
 
     var classRoom = require('classroom');
 
-    var testClass = classRoom.teach({
+    var TestClass = classRoom.teach({
       initialize: function (arg1, arg2/* , arg3, ... , argn */) {
         // This is the constructor function
         // Properties added here will be private
@@ -42,14 +43,13 @@ A implementation of classes in Javascript for ES5 engines.
       }
     });
 
-    var instance = testClass.new("First arg");
+    var instance = TestClass.new("First arg");
 
     instance.const1; // => "Awesome, I'm immutable!"
     instance.const1 = 'new value'; // throws TypeError
 
     instance.privateArg; // => undefined
     instance.pv1; // => undefined
-    instance.privateArg; // => undefined
     instance.secretFn; // => undefined
 
     instance.gimmeSecret(); // => "I'm a getter for a private member: I'm invisible to the outside world."
