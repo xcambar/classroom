@@ -89,3 +89,24 @@ describe 'private properties', ->
   it 'should be available to instance members', ->
     obj = classRoom.teach(private: {a: "I'm private"}, getA: -> @a).new()
     obj.getA().should.be.eql "I'm private"
+
+describe 'Inheritance', ->
+  parentClass = classRoom.teach
+    initialize: ->
+    private: 
+      prop: "privateValue"
+      fn: -> "privateFn"
+    const:
+      constValue: "immutable"
+  describe 'API', ->
+    it 'should be accessible via an "extend" function property on the module', ->
+      classRoom.should.contain.keys ['extend']
+      classRoom.extend.should.be.a 'function'
+    it 'should take exactly 2 parameters', ->
+      classRoom.extend.bind().should.throw Error
+      classRoom.extend.bind(undefined, parentClass).should.throw Error
+      classRoom.extend.bind(undefined, parentClass, {}).should.not.throw Error
+    it 'returns a new class descriptor', ->
+      classRoom.extend(parentClass, {}).should.be.a 'object'
+      classRoom.extend(parentClass, {}).should.have.keys ['new']
+

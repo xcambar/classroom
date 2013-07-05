@@ -99,5 +99,11 @@ module.exports = {
     return {
       new: _generateNew(desc)
     };
+  },
+  extend: function (parentClass, childClass) {
+     if (!parentClass || !childClass) {
+       throw new Error('Missing parameter to classroom::extend');
+     }
+     return module.exports.teach({});
   }
 };
