@@ -24,5 +24,8 @@
     "istanbul": "~0.1.39",
     "sinon": "~1.7.3",
     "coffee-script-redux": "~2.0.0-beta5"
+  },
+  "dependencies": {
+    "huggybear": "~0.2.0"
   }
 }
