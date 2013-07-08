@@ -18,6 +18,11 @@
 // }
 //
 
+/*
+  The list of reserved keywords
+  Reserved keywords can not be used as the name of any property
+  @type {Array}
+*/
 var _reserved = ['const', 'initialize', 'private'];
 
 function _defProp(obj, key, value, isConst) {
@@ -84,6 +89,15 @@ function _generateNew (desc) {
   };
 }
 
+function _descriptor (desc) {
+  return {
+    new: _generateNew(desc),
+    extend: function (extension) {
+      return module.exports.extend.apply(undefined, [desc].concat([].slice.apply(arguments)));
+    }
+  };
+}
+
 module.exports = {
   teach: function (desc) {
     if (!desc) {
@@ -96,14 +110,20 @@ module.exports = {
     } else {
       desc.initialize = function () {};
     }
-    return {
-      new: _generateNew(desc)
-    };
+    return _descriptor(desc);
+  },
+  new: function () {
+    var args = [].slice.apply(arguments);
+    var desc = args.shift();
+    return module.exports.teach(desc).new.apply(undefined, args);
   },
   extend: function (parentClass, childClass) {
-     if (!parentClass || !childClass) {
-       throw new Error('Missing parameter to classroom::extend');
-     }
-     return module.exports.teach({});
+    if (!parentClass || !childClass) {
+      throw new Error('Missing parameter to ::extend');
+    }
+    if (arguments.length > 2) {
+      throw new Error('Too many paameters to ::extend');
+    }
+    return module.exports.teach({});
   }
 };

@@ -1,6 +1,6 @@
 {
   "name": "classroom",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Ruby-like implementation for ES5",
   "main": "index.js",
   "scripts": {

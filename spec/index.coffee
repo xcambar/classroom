@@ -9,8 +9,17 @@ classRoom = require '../index'
 describe 'global API', ->
   it 'should be an object', ->
     classRoom.should.be.a 'object'
+  it 'should contain a property "extend"', ->
+    expect(classRoom.extend).to.not.be.undefined
   it 'should contain a property "teach"', ->
     expect(classRoom.teach).to.not.be.undefined
+  describe 'classRoom.new', ->
+    it 'should be a function', ->
+      classRoom.new.should.be.a 'function'
+    it 'should be a shortcut to classRoom.teach(desc).new(/*args*/)'
+  describe 'classRoom.extend', ->
+    it 'should be a function', ->
+      classRoom.extend.should.be.a 'function'
   describe 'classRoom.teach', ->
     it 'should be a function', ->
       classRoom.teach.should.be.a 'function'
@@ -108,5 +117,20 @@ describe 'Inheritance', ->
       classRoom.extend.bind(undefined, parentClass, {}).should.not.throw Error
     it 'returns a new class descriptor', ->
       classRoom.extend(parentClass, {}).should.be.a 'object'
-      classRoom.extend(parentClass, {}).should.have.keys ['new']
+      classRoom.extend(parentClass, {}).should.have.keys ['new', 'extend']
+    it 'should be accessible via the "extend" function property of a class descriptor', ->
+      classRoom.teach({}).should.have.keys ['new', 'extend']
+      classRoom.teach({}).extend.should.be.a 'function'
+    it 'should take only one parameter when called from a descriptor', ->
+      classRoom.teach({}).extend.bind(undefined).should.throw()
+      classRoom.teach({}).extend.bind(undefined, {}).should.not.throw()
+      classRoom.teach({}).extend.bind(undefined, {}, {}).should.throw()
 
+#
+# Extension:
+# * Use huggy bear to store internally the descriptions of the classes
+# * Find them when required for extension
+# * Merge with the child class
+# * Provide a super() method through a closure
+#
+#
