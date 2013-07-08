@@ -92,7 +92,7 @@ function _generateNew (desc) {
 function _descriptor (desc) {
   return {
     new: _generateNew(desc),
-    extend: function (extension) {
+    extend: function () {
       return module.exports.extend.apply(undefined, [desc].concat([].slice.apply(arguments)));
     }
   };
